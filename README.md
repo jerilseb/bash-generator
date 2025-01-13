@@ -1,4 +1,4 @@
-## aibash
+## bash-generator
 
 A CLI utility to generate bash commands by saying what you want
 
