@@ -16,7 +16,7 @@ archives:
   - format: tar.gz
 
 brews:
-  - name: aibash
+  - name: bash-generator
     description: "Generate Bash commands by saying what you want"
     homepage: "https://github.com/jerilseb/aibash"
     repository:
