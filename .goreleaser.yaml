@@ -7,9 +7,11 @@ before:
 builds:
   - env:
       - CGO_ENABLED=0
-    goos:
-      - linux
-      - darwin
+    targets:
+      - darwin/amd64    # Intel Macs
+      - darwin/arm64    # Apple Silicon
+      - linux/amd64     # Linux (x86_64)
+      - linux/arm64     # Linux (ARM64)
 
 archives:
   - format: tar.gz
