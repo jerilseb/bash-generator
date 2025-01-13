@@ -230,13 +230,10 @@ func int16ToIntSlice(in []int16) []int {
 	return out
 }
 
-// transcribeAudio sends the WAV file to OpenAI's Whisper endpoint and returns the transcribed text.
 func transcribeAudio(apiKey, filePath string) (string, error) {
-	// Prepare multipart form
 	var b bytes.Buffer
 	w := multipart.NewWriter(&b)
 
-	// Add file
 	file, err := os.Open(filePath)
 	if err != nil {
 		return "", err
@@ -251,7 +248,6 @@ func transcribeAudio(apiKey, filePath string) (string, error) {
 		return "", err
 	}
 
-	// Add model field
 	if err := w.WriteField("model", "whisper-1"); err != nil {
 		return "", err
 	}
@@ -260,7 +256,6 @@ func transcribeAudio(apiKey, filePath string) (string, error) {
 		return "", err
 	}
 
-	// Prepare the request
 	req, err := http.NewRequest("POST", "https://api.openai.com/v1/audio/transcriptions", &b)
 	if err != nil {
 		return "", err
@@ -268,7 +263,6 @@ func transcribeAudio(apiKey, filePath string) (string, error) {
 	req.Header.Set("Authorization", "Bearer "+apiKey)
 	req.Header.Set("Content-Type", w.FormDataContentType())
 
-	// Execute request
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
@@ -276,13 +270,11 @@ func transcribeAudio(apiKey, filePath string) (string, error) {
 	}
 	defer resp.Body.Close()
 
-	// Check status
 	if resp.StatusCode != http.StatusOK {
 		responseBody, _ := io.ReadAll(resp.Body)
 		return "", fmt.Errorf("non-200 status code: %d - %s", resp.StatusCode, string(responseBody))
 	}
 
-	// Parse JSON
 	var transcription openAITranscriptionResponse
 	if err := json.NewDecoder(resp.Body).Decode(&transcription); err != nil {
 		return "", err
@@ -290,8 +282,6 @@ func transcribeAudio(apiKey, filePath string) (string, error) {
 	return transcription.Text, nil
 }
 
-// generateBashCommand sends the transcribed text to the GPT-4 Chat Completions
-// endpoint, instructing it to return a single Bash command.
 func generateBashCommand(apiKey, userText string) (string, error) {
 	payload := openAIChatRequest{
 		Model: "gpt-4",
