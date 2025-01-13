@@ -18,7 +18,7 @@ archives:
 brews:
   - name: bash-generator
     description: "Generate Bash commands by saying what you want"
-    homepage: "https://github.com/jerilseb/aibash"
+    homepage: "https://github.com/jerilseb/bash-generator"
     repository:
       owner: jerilseb
       name: homebrew-tap
