@@ -1,4 +1,4 @@
-module aibash
+module bash-generator
 
 go 1.23.2
 
