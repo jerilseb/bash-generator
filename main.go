@@ -46,7 +46,6 @@ import (
 	"github.com/go-audio/audio"
 	"github.com/go-audio/wav"
 	"github.com/gordonklaus/portaudio"
-	"github.com/joho/godotenv"
 )
 
 // openAIChatRequest is the JSON structure we send to the Chat Completion endpoint.
@@ -90,11 +89,9 @@ func main() {
 }
 
 func run() error {
-	_ = godotenv.Load()
-
 	apiKey := os.Getenv("OPENAI_API_KEY")
 	if apiKey == "" {
-		return fmt.Errorf("OpenAI API key not found. Please set OPENAI_API_KEY in your environment or .env file")
+		return fmt.Errorf("OpenAI API key not found. Please set OPENAI_API_KEY in your environment")
 	}
 
 	if err := portaudio.Initialize(); err != nil {

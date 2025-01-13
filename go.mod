@@ -7,7 +7,6 @@ require (
 	github.com/go-audio/audio v1.0.0
 	github.com/go-audio/wav v1.1.0
 	github.com/gordonklaus/portaudio v0.0.0-20230709114228-aafa478834f5
-	github.com/joho/godotenv v1.5.1
 )
 
 require (
