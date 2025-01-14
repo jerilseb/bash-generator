@@ -284,7 +284,7 @@ func transcribeAudio(apiKey, filePath string) (string, error) {
 
 func generateBashCommand(apiKey, userText string) (string, error) {
 	payload := openAIChatRequest{
-		Model: "gpt-4",
+		Model: "gpt-4o",
 		Messages: []map[string]string{
 			{
 				"role":    "system",
