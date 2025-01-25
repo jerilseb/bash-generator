@@ -1,6 +1,6 @@
 ## bash-generator
 
-A CLI utility to generate bash commands by saying what you want
+A CLI utility to generate bash commands by speaking to the terminal
 
 ## Installation
 
