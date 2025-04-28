@@ -35,6 +35,7 @@ import (
 	"mime/multipart"
 	"net/http"
 	"os"
+	"os/exec"
 	"os/signal"
 	"path/filepath"
 	"strings"
@@ -183,10 +184,33 @@ func run() error {
 		s.Stop()
 		return fmt.Errorf("error generating command: %w", err)
 	}
-
 	// Stop the spinner and print the result
 	s.Stop()
-	fmt.Printf("\n%s\n", strings.TrimSpace(generatedCommand))
+	// Clean the command
+	cleanCommand := strings.TrimSpace(generatedCommand)
+	fmt.Printf("\n%s\n\n", cleanCommand)
+	fmt.Print("Run this command? (Y/n): ")
+
+	reader := bufio.NewReader(os.Stdin)
+	response, err := reader.ReadString('\n')
+	if err != nil {
+		return fmt.Errorf("failed to read user input: %w", err)
+	}
+
+	response = strings.ToLower(strings.TrimSpace(response))
+	if response == "" || response == "y" || response == "yes" {
+		fmt.Printf("\n")
+		cmd := exec.Command("bash", "-c", cleanCommand)
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+		err := cmd.Run()
+		if err != nil {
+			return fmt.Errorf("failed to execute command: %w", err)
+		}
+	} else {
+		fmt.Println("Command not executed.")
+	}
+
 	return nil
 }
 
